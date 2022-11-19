@@ -8,7 +8,7 @@ will run in the browser and feature dynamically updated HTML and CSS.
 
 Use the 5 Day Weather Forecast to retrieve weather data for cities. The base 
 should look like the following: 
-https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}. 
+https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={APIkey}. 
 
 After registering for a new API key, you may need to wait up to 2 hours for 
 that API key to activate.
