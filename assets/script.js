@@ -1,5 +1,10 @@
 var searchEntry = $("#search-entry");
 var searchButton = $("#search-button");
+var currentCityInfo = $("#current-city-info");
+var currentTemp = $("#current-temp");
+var currentWind = $("#current-wind");
+var currentHumidity = $("#current-humidity");
+
 var city;
 
 //var recentSearches = JSON.parse(localStorage.getItem("recentSearches"));
@@ -55,6 +60,11 @@ function getApi(){
         return response.json();
         })
         .then(function (data) {
+           currentCityInfo.text(city + "  ("+ convertedUnixDate(data.dt,data.timezone) + ")"); 
+           currentTemp.text("Temp: " + (data.main.temp).toFixed(2) + "C");
+           currentWind.text("Wind: " + (data.wind.speed/10*36).toFixed(2) + "Km/h");
+           currentHumidity.text("Humidity: " + (data.main.humidity).toFixed(0) + "%");
+
         // console.log(data);
         // console.log("City: " + data.name);
         // console.log("Date: " + convertedUnixDate(data.dt,data.timezone));
@@ -90,7 +100,7 @@ function getCity(){
 }
 function runAll(){
     getCity();
-    //getApi();     ///add func to check if city valid before proceeding 
+    getApi();     ///add func to check if city valid before proceeding 
     updateRecent();
     searchEntry.val('');
 }
