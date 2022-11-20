@@ -84,17 +84,21 @@ function getApi(){
     }
 
 function getCity(){
-    city = searchEntry.val();
+    city = searchEntry.val().trim();
     console.log("city: " + city);
+    
 }
 function runAll(){
     getCity();
     //getApi();     ///add func to check if city valid before proceeding 
     updateRecent();
-
-    
-
+    searchEntry.val('');
 }
 
 searchButton.on('click',runAll);
+searchEntry.on('keypress',function(e) {
+    if(e.keyCode == 13) runAll();
+})
+
+
 console.log(JSON.parse(localStorage.getItem("recentSearches")));
