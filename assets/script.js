@@ -4,10 +4,14 @@ var currentCityInfo = $("#current-city-info");
 var currentTemp = $("#current-temp");
 var currentWind = $("#current-wind");
 var currentHumidity = $("#current-humidity");
+var recentButtons = $("#recent-buttons");
+
+//console.log(recentButtons);
+//console.log(recentButtons.children()[0]);
 
 var city;
 
-//var recentSearches = JSON.parse(localStorage.getItem("recentSearches"));
+var recentSearches; // = JSON.parse(localStorage.getItem("recentSearches"));
 
 function convertedUnixDate(timeStamp,timeZone){
         var localDate = new Date();
@@ -18,7 +22,7 @@ function convertedUnixDate(timeStamp,timeZone){
 };
 
 function updateRecent(){    
-    var recentSearches = JSON.parse(localStorage.getItem("recentSearches"));
+    recentSearches = JSON.parse(localStorage.getItem("recentSearches"));
     var tempArray = [];
     var length;
 
@@ -50,50 +54,34 @@ function updateRecent(){
     console.log("temp: " + tempArray);
 }
 
-function getApi(){
+function getApi(){  //get current and forecast info from api
     var apiKey = "608e89a8abd53641f8198304f956f5a7";
     var queryWeatherURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey+"&units=metric";
     var queryForecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + apiKey+"&units=metric";
 
-    fetch(queryWeatherURL)
+    fetch(queryWeatherURL)  //get current info              
         .then(function (response) {
         return response.json();
         })
         .then(function (data) {
            currentCityInfo.text(city + "  ("+ convertedUnixDate(data.dt,data.timezone) + ")"); 
-           currentTemp.text("Temp: " + (data.main.temp).toFixed(2) + "C");
+           currentTemp.text("Temp: " + (data.main.temp).toFixed(2) + "ºC");
            currentWind.text("Wind: " + (data.wind.speed/10*36).toFixed(2) + "Km/h");
            currentHumidity.text("Humidity: " + (data.main.humidity).toFixed(0) + "%");
-
-        // console.log(data);
-        // console.log("City: " + data.name);
-        // console.log("Date: " + convertedUnixDate(data.dt,data.timezone));
-        // console.log("Icon: " + "");
-        // console.log("Temp: " + (data.main.temp) + "C");
-        // console.log("Wind: " + (data.wind.speed/10*36) + "Km/h");
-        // console.log("Humidity: " + (data.main.humidity) + "%");
         })
-    fetch(queryForecastURL)
+    fetch(queryForecastURL) //get forecast info
         .then(function (response) {
-        return response.json();
+            return response.json();
         })
         .then(function (data) {
-        // console.log(data);
-        // console.log(data.list);
-        for (var i = 0, j=7; i < 5 && j< data.list.length; i++, j+=8) {
-            var fiveDays = [];
-            fiveDays[i] ;
-            // console.log(i);
-            // console.log(j);
-            // console.log(convertedUnixDate(data.list[j].dt,data.city.timezone));
-            // console.log((data.list[j].main.temp).toFixed(2) + "C") ;
-            // console.log((data.list[j].wind.speed/10*36).toFixed(2) + "Km/h");
-            // console.log((data.list[j].main.humidity).toFixed(0) + "%");
+            for (var i = 0, j=7; i < 5 && j< data.list.length; i++, j+=8) {
+                var fiveDays = [];
+                fiveDays[i] ;
         }
         })
     }
 
-function getCity(){
+function getCity(){ //get city from searchEnter textarea
     city = searchEntry.val().trim();
     console.log("city: " + city);
     
@@ -103,12 +91,26 @@ function runAll(){
     getApi();     ///add func to check if city valid before proceeding 
     updateRecent();
     searchEntry.val('');
+    loadRecentButtons();
 }
 
+function loadRecentButtons(){
+    recentSearches = JSON.parse(localStorage.getItem("recentSearches"));
+    if (recentSearches != null){
+        for(var i = 0; i < recentSearches.length; i++){
+            var currentButton = recentButtons.children().eq(i);
+            currentButton.text(recentSearches[i]);
+            currentButton.removeClass("hide");
+            console.log(currentButton.text());
+        }
+    }
+}
+
+loadRecentButtons();
 searchButton.on('click',runAll);
 searchEntry.on('keypress',function(e) {
     if(e.keyCode == 13) runAll();
 })
 
 
-console.log(JSON.parse(localStorage.getItem("recentSearches")));
+//console.log(JSON.parse(localStorage.getItem("recentSearches")));
