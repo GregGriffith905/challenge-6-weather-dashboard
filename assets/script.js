@@ -8,13 +8,15 @@ var recentButtons = $("#recent-buttons");
 
 var forecast = $('#forecast');
 
-var forecast1 = $('#forecast1');
-var forecast2 = $('#forecast2');
-var forecast3 = $('#forecast3');
-var forecast4 = $('#forecast4');
-var forecast5 = $('#forecast5');
+// var forecast1 = $('#forecast1');
+// var forecast2 = $('#forecast2');
+// var forecast3 = $('#forecast3');
+// var forecast4 = $('#forecast4');
+// var forecast5 = $('#forecast5');
 
 var city;
+var responseStatus;
+
 
 var recentSearches; // = JSON.parse(localStorage.getItem("recentSearches"));
 
@@ -64,44 +66,53 @@ function getApi(){  //get current and forecast info from api
 
     fetch(queryWeatherURL)  //get current info              
         .then(function (response) {
+        //console.log(response.status); 
+        responseStatus = response.status;
+        if (responseStatus != 200){
+            alert("Invalid entry or City not found"); 
+            return;
+        }
         return response.json();
         })
         .then(function (data) {
-           currentCityInfo.text(city + "  ("+ convertedUnixDate(data.dt,data.timezone) + ")"); 
-           currentTemp.text("Temp: " + (data.main.temp).toFixed(2) + "ºC");
-           currentWind.text("Wind: " + (data.wind.speed/10*36).toFixed(2) + "Km/h");
-           currentHumidity.text("Humidity: " + (data.main.humidity).toFixed(0) + "%");
-        })
-    fetch(queryForecastURL) //get forecast info
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            console.log(data);
-            console.log(data.list[2].dt);
-            
-            for (var i = 0, j=7; i < 5 && j< data.list.length; i++, j+=8) {
-                var fiveDays = [];
-                fiveDays[i] ;
-                var forecastCard = forecast.children()[1].children[i];
-                var fcastDate = new Date(data.list[j].dt_txt)
-                var fcastdateformatted = fcastDate.getMonth()+1 + '/' + fcastDate.getDate() + '/' + fcastDate.getFullYear();
+           if (responseStatus == 200){
+            currentCityInfo.text(city + "  ("+ convertedUnixDate(data.dt,data.timezone) + ")"); 
+            currentTemp.text("Temp: " + (data.main.temp).toFixed(2) + "ºC");
+            currentWind.text("Wind: " + (data.wind.speed/10*36).toFixed(2) + "Km/h");
+            currentHumidity.text("Humidity: " + (data.main.humidity).toFixed(0) + "%");
+           }
+        }) 
+        fetch(queryForecastURL) //get forecast info
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                for (var i = 0, j=7; i < 5 && j< data.list.length; i++, j+=8) {
+                    var fiveDays = [];
+                    fiveDays[i] ;
+                    var forecastCard = forecast.children()[1].children[i];
+                    var fcastDate = new Date(data.list[j].dt_txt)
+                    var fcastdateformatted = fcastDate.getMonth()+1 + '/' + fcastDate.getDate() + '/' + fcastDate.getFullYear();
+                    var forecastDate = forecastCard.children[0].children[0].children[0];
+                    var forecastTemp = forecastCard.children[0].children[0].children[1];
+                    var forecastWind = forecastCard.children[0].children[0].children[2];
+                    var forecastHumidity = forecastCard.children[0].children[0].children[3];
 
-                forecastCard.children[0].children[0].children[0].textContent=(fcastdateformatted);
-                forecastCard.children[0].children[0].children[1].textContent=("Temp: " + data.list[j].main.temp.toFixed(2) + "ºC");
-                forecastCard.children[0].children[0].children[2].textContent=("Wind: " + data.list[j].wind.speed.toFixed(2) + "Km/h");
-                forecastCard.children[0].children[0].children[3].textContent=("Humidity: " + data.list[j].main.humidity.toFixed(0) + "%");
+                    forecastDate.textContent=(fcastdateformatted);
+                    forecastTemp.textContent=("Temp: " + data.list[j].main.temp.toFixed(2) + "ºC");
+                    forecastWind.textContent=("Wind: " + data.list[j].wind.speed.toFixed(2) + "Km/h");
+                    forecastHumidity.textContent=("Humidity: " + data.list[j].main.humidity.toFixed(0) + "%");
 
-                //forecastCard.children[0] = convertedUnixDate(data.dt,data.timezone)
-                // console.log(data.list[j].main.temp);
-                // console.log(data.list[j].wind.speed);
-                // console.log(data.list[j].main.humidity);
+                    //forecastCard.children[0] = convertedUnixDate(data.dt,data.timezone)
+                    // console.log(data.list[j].main.temp);
+                    // console.log(data.list[j].wind.speed);
+                    // console.log(data.list[j].main.humidity);
 
-                console.log(forecastCard.children[0].children[0].children[0]);
-                console.log(forecastCard.children[0].children[0].children[1]);
-        }
-        })
-    }
+                    //console.log(forecastCard.children[0].children[0].children[0]);
+                    //console.log(forecastCard.children[0].children[0].children[1]);
+                }
+            })
+}
 
 function getCity(){ //get city from searchEnter textarea
     city = searchEntry.val().trim();
@@ -109,11 +120,16 @@ function getCity(){ //get city from searchEnter textarea
     
 }
 function runAll(){
-    getCity();
-    getApi();     ///add func to check if city valid before proceeding 
-    updateRecent();
-    searchEntry.val('');
-    loadRecentButtons();
+    if (searchEntry.val()!=""){
+        getCity();
+        getApi();     ///add func to check if city valid before proceeding 
+        //console.log(responseStatus)
+        if (responseStatus == "200"){
+            updateRecent();
+            searchEntry.val('');
+            loadRecentButtons();
+        }
+    }
 }
 
 function runAll2(event){
@@ -128,13 +144,13 @@ function loadRecentButtons(){
             var currentButton = recentButtons.children().eq(i);
             currentButton.text(recentSearches[i]);
             currentButton.removeClass("hide");
-            console.log(currentButton.text());
+            //console.log(currentButton.text());
         }
     }
 }
 
 
-console.log(forecast.children()[1].children[1]);
+
 loadRecentButtons();
 searchButton.on('click',runAll);
 searchEntry.on('keypress',function(e) {
@@ -151,4 +167,10 @@ recentButtons.children().eq(6).on('click', runAll2);
 recentButtons.children().eq(7).on('click', runAll2);
 
 
-//console.log(JSON.parse(localStorage.getItem("recentSearches")));
+//clouds
+//clear
+//atmosphere
+//snow
+//rain
+//drizzle
+//thunderstorm
