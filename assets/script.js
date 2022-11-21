@@ -6,8 +6,13 @@ var currentWind = $("#current-wind");
 var currentHumidity = $("#current-humidity");
 var recentButtons = $("#recent-buttons");
 
-//console.log(recentButtons);
-//console.log(recentButtons.children()[0]);
+var forecast = $('#forecast');
+
+var forecast1 = $('#forecast1');
+var forecast2 = $('#forecast2');
+var forecast3 = $('#forecast3');
+var forecast4 = $('#forecast4');
+var forecast5 = $('#forecast5');
 
 var city;
 
@@ -17,7 +22,7 @@ function convertedUnixDate(timeStamp,timeZone){
         var localDate = new Date();
         var timeZoneCorrection = timeZone + localDate.getTimezoneOffset()*60;       
         var convertedDate = new Date((timeStamp + timeZoneCorrection)*1000);
-        var displayDate = convertedDate.getMonth()+1 + '/' + convertedDate.getDate() + '/' + + convertedDate.getFullYear() + " " + convertedDate.getHours() + ':' + convertedDate.getMinutes();        
+        var displayDate = convertedDate.getMonth()+1 + '/' + convertedDate.getDate() + '/' + convertedDate.getFullYear() + " " + convertedDate.getHours() + ':' + String(convertedDate.getMinutes()).padStart(2,'0');        
         return displayDate;        
 };
 
@@ -45,10 +50,8 @@ function updateRecent(){
         }
         recentSearches = tempArray;
     }
-    if (recentSearches == null) {
-        recentSearches = [city];
-        
-    }
+    if (recentSearches == null) recentSearches = [city];
+
     console.log(recentSearches);
     localStorage.setItem('recentSearches',  JSON.stringify(recentSearches));
     console.log("temp: " + tempArray);
@@ -74,9 +77,28 @@ function getApi(){  //get current and forecast info from api
             return response.json();
         })
         .then(function (data) {
+            console.log(data);
+            console.log(data.list[2].dt);
+            
             for (var i = 0, j=7; i < 5 && j< data.list.length; i++, j+=8) {
                 var fiveDays = [];
                 fiveDays[i] ;
+                var forecastCard = forecast.children()[1].children[i];
+                var fcastDate = new Date(data.list[j].dt_txt)
+                var fcastdateformatted = fcastDate.getMonth()+1 + '/' + fcastDate.getDate() + '/' + fcastDate.getFullYear();
+
+                forecastCard.children[0].children[0].children[0].textContent=(fcastdateformatted);
+                forecastCard.children[0].children[0].children[1].textContent=("Temp: " + data.list[j].main.temp.toFixed(2) + "ºC");
+                forecastCard.children[0].children[0].children[2].textContent=("Wind: " + data.list[j].wind.speed.toFixed(2) + "Km/h");
+                forecastCard.children[0].children[0].children[3].textContent=("Humidity: " + data.list[j].main.humidity.toFixed(0) + "%");
+
+                //forecastCard.children[0] = convertedUnixDate(data.dt,data.timezone)
+                // console.log(data.list[j].main.temp);
+                // console.log(data.list[j].wind.speed);
+                // console.log(data.list[j].main.humidity);
+
+                console.log(forecastCard.children[0].children[0].children[0]);
+                console.log(forecastCard.children[0].children[0].children[1]);
         }
         })
     }
@@ -111,6 +133,8 @@ function loadRecentButtons(){
     }
 }
 
+
+console.log(forecast.children()[1].children[1]);
 loadRecentButtons();
 searchButton.on('click',runAll);
 searchEntry.on('keypress',function(e) {
