@@ -94,6 +94,11 @@ function runAll(){
     loadRecentButtons();
 }
 
+function runAll2(event){
+    city = event.target.textContent;
+    getApi();
+}
+
 function loadRecentButtons(){
     recentSearches = JSON.parse(localStorage.getItem("recentSearches"));
     if (recentSearches != null){
@@ -111,6 +116,15 @@ searchButton.on('click',runAll);
 searchEntry.on('keypress',function(e) {
     if(e.keyCode == 13) runAll();
 })
+
+recentButtons.children().eq(0).on('click', runAll2);
+recentButtons.children().eq(1).on('click', runAll2);
+recentButtons.children().eq(2).on('click', runAll2);
+recentButtons.children().eq(3).on('click', runAll2);
+recentButtons.children().eq(4).on('click', runAll2);
+recentButtons.children().eq(5).on('click', runAll2);
+recentButtons.children().eq(6).on('click', runAll2);
+recentButtons.children().eq(7).on('click', runAll2);
 
 
 //console.log(JSON.parse(localStorage.getItem("recentSearches")));
