@@ -9,30 +9,19 @@ var recentButtons = $("#recent-buttons");
 
 var forecast = $('#forecast');
 
-
-             
-
-// var forecast1 = $('#forecast1');
-// var forecast2 = $('#forecast2');
-// var forecast3 = $('#forecast3');
-// var forecast4 = $('#forecast4');
-// var forecast5 = $('#forecast5');
-
 var city;
 var responseStatus;
 var isDay;
 
-
-var recentSearches; // = JSON.parse(localStorage.getItem("recentSearches"));
+var recentSearches; 
 
 function convertedUnixDate(timeStamp,timeZone){
         var localDate = new Date();
         var timeZoneCorrection = timeZone + localDate.getTimezoneOffset()*60;       
         var convertedDate = new Date((timeStamp + timeZoneCorrection)*1000);
-        var displayDate = convertedDate.getMonth()+1 + '/' + convertedDate.getDate() + '/' + convertedDate.getFullYear() + " " + convertedDate.getHours() + ':' + String(convertedDate.getMinutes()).padStart(2,'0');        
+        var displayDate = convertedDate.getMonth()+1 + '/' + convertedDate.getDate() + '/' + convertedDate.getFullYear();// + " " + convertedDate.getHours() + ':' + String(convertedDate.getMinutes()).padStart(2,'0');        
         if (convertedDate.getHours()>6 && convertedDate.getHours()<18) isDay=true;
         else isDay = false;
-        console.log(isDay);
         return displayDate;        
 };
 
@@ -77,9 +66,7 @@ function getIcon(weather){
              rain: '<i class="fa">&#xf740</i>',
              drizzle: '<i class="fa">&#xf73d</i>',
              thunderstorm: '<i class="fa">&#xf75a</i>'
-            };    
-    console.log(weather.main);
-    console.log(icons);        
+            };          
     if (weather.main == "Clear" && isDay) return icons.clear[0];
     else if (weather.main == "Clear") return icons.clear[1];
     else if (weather.main == "Clouds") return icons.clouds;
@@ -106,10 +93,10 @@ function getApi(){  //get current and forecast info from api
         return response.json();
         })
         .then(function (data) {
-            console.log(data);
-           if (responseStatus == 200){
-            currentCityInfo.text(city + "  ("+ convertedUnixDate(data.dt,data.timezone) + ")"); 
-            currentIcon.html(getIcon(data.weather[0]));
+            city = data.name;
+            if (responseStatus == 200){
+            currentCityInfo.text(city + "  ("+ convertedUnixDate(data.dt,data.timezone) + ") "); 
+            currentIcon.html(getIcon(data.weather[0])); 
             currentTemp.text("Temp: " + (data.main.temp).toFixed(2) + "ºC");
             currentWind.text("Wind: " + (data.wind.speed/10*36).toFixed(2) + "Km/h");
             currentHumidity.text("Humidity: " + (data.main.humidity).toFixed(0) + "%");
@@ -120,7 +107,6 @@ function getApi(){  //get current and forecast info from api
                 return response.json();
             })
             .then(function (data) {
-                console.log(data);
                 for (var i = 0, j=7; i < 5 && j< data.list.length; i++, j+=8) {
                     var fiveDays = [];
                     fiveDays[i] ;
@@ -138,14 +124,6 @@ function getApi(){  //get current and forecast info from api
                     forecastTemp.textContent=("Temp: " + data.list[j].main.temp.toFixed(2) + "ºC");
                     forecastWind.textContent=("Wind: " + data.list[j].wind.speed.toFixed(2) + "Km/h");
                     forecastHumidity.textContent=("Humidity: " + data.list[j].main.humidity.toFixed(0) + "%");
-
-                    //forecastCard.children[0] = convertedUnixDate(data.dt,data.timezone)
-                    // console.log(data.list[j].main.temp);
-                    // console.log(data.list[j].wind.speed);
-                    // console.log(data.list[j].main.humidity);
-
-                    //console.log(forecastCard.children[0].children[0].children[0]);
-                    //console.log(forecastCard.children[0].children[0].children[1]);
                 }
             })
 }
@@ -158,13 +136,10 @@ function getCity(){ //get city from searchEnter textarea
 function runAll(){
     if (searchEntry.val()!=""){
         getCity();
-        getApi();     ///add func to check if city valid before proceeding 
-        //console.log(responseStatus)
-        if (responseStatus == "200"){
-            updateRecent();
-            searchEntry.val('');
-            loadRecentButtons();
-        }
+        getApi();  
+        updateRecent();
+        searchEntry.val('');
+        loadRecentButtons();
     }
 }
 
@@ -180,13 +155,18 @@ function loadRecentButtons(){
             var currentButton = recentButtons.children().eq(i);
             currentButton.text(recentSearches[i]);
             currentButton.removeClass("hide");
-            //console.log(currentButton.text());
         }
     }
 }
+function loadLastSearch(){
+    recentSearches = JSON.parse(localStorage.getItem("recentSearches"));
+    if (recentSearches != null){
+        city = recentSearches[0];
+        getApi();
+    }
+}
 
-
-
+loadLastSearch();
 loadRecentButtons();
 searchButton.on('click',runAll);
 searchEntry.on('keypress',function(e) {
