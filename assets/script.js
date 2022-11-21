@@ -29,25 +29,37 @@ function updateRecent(){
     recentSearches = JSON.parse(localStorage.getItem("recentSearches"));
     var tempArray = [];
     var length;
+    var inList = false;
 
     
     if (recentSearches != null){
         length = recentSearches.length;  
         for (var i = 0; i < length; i++){   //check if city is already in list
-            if (city == recentSearches[i]) return;
-        }
-        tempArray[0] = city;
-        if (length<8){                     //if list length < 8, add city to list 
-            for (var i=0; i<length; i++){
-                tempArray[i+1] = recentSearches[i] ;
+            if (city == recentSearches[i]){//  return;
+                recentSearches.splice(i,1);
+                recentSearches.unshift(city);
+                inList = true;
+               // return; 
             }
+
         }
-        if (length>=8){                    // if list length >= 8, add city to list and delete least recent city 
-            for (var i=0; i<7; i++){
-                tempArray[i+1] = recentSearches[i] ;
-            }   
+        if (!inList) {
+            //tempArray[0] = city;
+            if (length<8){                     //if list length < 8, add city to list 
+                recentSearches.unshift(city)
+                // for (var i=0; i<length; i++){
+                //     tempArray[i+1] = recentSearches[i] ;
+                // }
+            }
+            if (length>=8){                    // if list length >= 8, add city to list and delete least recent city 
+                recentSearches.splice(7);
+                recentSearches.unshift(city);
+                // for (var i=0; i<7; i++){
+                //     tempArray[i+1] = recentSearches[i] ;
+                // }   
+            }
+            //recentSearches = tempArray;
         }
-        recentSearches = tempArray;
     }
     if (recentSearches == null) recentSearches = [city];
 
@@ -133,6 +145,13 @@ function getCity(){ //get city from searchEnter textarea
     console.log("city: " + city);
     
 }
+
+// function rearrangeButtons(){
+//     recentSearches = JSON.parse(localStorage.getItem("recentSearches"));
+//     console.log(recentSearches);
+//     recentSearches.splice()
+
+// }
 function runAll(){
     if (searchEntry.val()!=""){
         getCity();
@@ -146,6 +165,8 @@ function runAll(){
 function runAll2(event){
     city = event.target.textContent;
     getApi();
+
+    //rearrangeButtons();
 }
 
 function loadRecentButtons(){
