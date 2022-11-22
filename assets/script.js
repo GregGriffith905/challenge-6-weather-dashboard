@@ -9,6 +9,7 @@ var recentButtons = $("#recent-buttons");
 var currentCard = $("#current-card");
 var lastUpdate = $("#last-update");
 var forecast = $('#forecast');
+var forecastCardClass = $('.forecast-card');
 
 var city;
 var responseStatus;
@@ -132,6 +133,12 @@ function getApi(){  //get current and forecast info from api
                         forecastTemp.textContent=("Temp: " + data.list[j].main.temp.toFixed(2) + "ºC");
                         forecastWind.textContent=("Wind: " + data.list[j].wind.speed.toFixed(2) + "Km/h");
                         forecastHumidity.textContent=("Humidity: " + data.list[j].main.humidity.toFixed(0) + "%");
+                        // if(isDay) forecastCard.children[0].children[0].css("color","white");
+                        // else forecastCard.children[0].children[0].css("color","black");
+                        if(isDay) forecastCardClass.css("color","white");
+                        else forecastCardClass.css("color","black");
+                        console.log(forecastCard);
+                        
                     }
                 }
             })

@@ -33,8 +33,6 @@
     font-weight:550;
     font-size: 18px;
     color: black;
-    /* box-shadow: none; */
-
 }
 
 .current-card{
@@ -42,7 +40,7 @@
 }
 
 .forecast-card{
-    background-color: rgb(168, 176, 189) ;
+    background-color: rgb(131, 130, 143);
     color: black;;
     
 }
@@ -50,6 +48,4 @@
     font-size: 13px;
     line-height: 0px;
     padding-bottom: 4px;
-  
-
 }
