@@ -95,7 +95,7 @@ function getApi(){  //get current and forecast info from api
             if (responseStatus == 200){ 
                 city = data.name; 
                 currentCityInfo.text(city + "  ("+ convertedUnixDate(data.dt,data.timezone)[0] + ") "); 
-                lastUpdate.text("Last update: " + convertedUnixDate(data.dt,data.timezone)[1] + "h local time");
+                lastUpdate.text("Last update: " + convertedUnixDate(data.dt,data.timezone)[1] + "h local time: " + data.name + "," + data.sys.country);
                 currentIcon.html(getIcon(data.weather[0])); 
                 currentTemp.text("Temp: " + (data.main.temp).toFixed(2) + "ºC");
                 currentWind.text("Wind: " + (data.wind.speed/10*36).toFixed(2) + "Km/h");
@@ -133,12 +133,8 @@ function getApi(){  //get current and forecast info from api
                         forecastTemp.textContent=("Temp: " + data.list[j].main.temp.toFixed(2) + "ºC");
                         forecastWind.textContent=("Wind: " + data.list[j].wind.speed.toFixed(2) + "Km/h");
                         forecastHumidity.textContent=("Humidity: " + data.list[j].main.humidity.toFixed(0) + "%");
-                        // if(isDay) forecastCard.children[0].children[0].css("color","white");
-                        // else forecastCard.children[0].children[0].css("color","black");
                         if(isDay) forecastCardClass.css("color","white");
-                        else forecastCardClass.css("color","black");
-                        console.log(forecastCard);
-                        
+                        else forecastCardClass.css("color","black");    
                     }
                 }
             })
