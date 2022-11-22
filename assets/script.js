@@ -7,21 +7,24 @@ var currentWind = $("#current-wind");
 var currentHumidity = $("#current-humidity");
 var recentButtons = $("#recent-buttons");
 var currentCard = $("#current-card");
+var lastUpdate = $("#last-update");
 var forecast = $('#forecast');
 
 var city;
 var responseStatus;
 var isDay;
-var recentSearches; 
+var recentSearches;
 
 function convertedUnixDate(timeStamp,timeZone){
         var localDate = new Date();
         var timeZoneCorrection = timeZone + localDate.getTimezoneOffset()*60;       
         var convertedDate = new Date((timeStamp + timeZoneCorrection)*1000);
         var displayDate = convertedDate.getMonth()+1 + '/' + convertedDate.getDate() + '/' + convertedDate.getFullYear();// + " " + convertedDate.getHours() + ':' + String(convertedDate.getMinutes()).padStart(2,'0');        
+        var displayTime = convertedDate.getHours() + ':' + String(convertedDate.getMinutes()).padStart(2,'0');        
+     
         if (convertedDate.getHours()>6 && convertedDate.getHours()<18) isDay=true;
         else isDay = false;
-        return displayDate;        
+        return [displayDate,displayTime];        
 };
 function updateRecent(){    
     recentSearches = JSON.parse(localStorage.getItem("recentSearches"));
@@ -90,7 +93,8 @@ function getApi(){  //get current and forecast info from api
         .then(function (data) {
             if (responseStatus == 200){ 
                 city = data.name; 
-                currentCityInfo.text(city + "  ("+ convertedUnixDate(data.dt,data.timezone) + ") "); 
+                currentCityInfo.text(city + "  ("+ convertedUnixDate(data.dt,data.timezone)[0] + ") "); 
+                lastUpdate.text("Last update: " + convertedUnixDate(data.dt,data.timezone)[1] + "h local time");
                 currentIcon.html(getIcon(data.weather[0])); 
                 currentTemp.text("Temp: " + (data.main.temp).toFixed(2) + "ºC");
                 currentWind.text("Wind: " + (data.wind.speed/10*36).toFixed(2) + "Km/h");
