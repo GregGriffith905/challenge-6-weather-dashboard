@@ -1,4 +1,4 @@
-var searchEntry = $("#search-entry");
+var searchEntry = $("#search-entry");            //imported html elements
 var searchButton = $("#search-button");
 var currentCityInfo = $("#current-city-info");
 var currentIcon = $("#current-icon");
@@ -11,31 +11,31 @@ var lastUpdate = $("#last-update");
 var forecast = $('#forecast');
 var forecastCardClass = $('.forecast-card');
 
-var city;
-var responseStatus;
-var isDay;
-var recentSearches;
+var city;                   //stores the city inputed
+var responseStatus;         //used in fetching
+var isDay;                  //check time for use of day/night icons
+var recentSearches;         //array to store 8 recent searches
 
-function convertedUnixDate(timeStamp,timeZone){
+function convertedUnixDate(timeStamp,timeZone){ //convert unix date to local time at searched city
         var localDate = new Date();
         var timeZoneCorrection = timeZone + localDate.getTimezoneOffset()*60;       
         var convertedDate = new Date((timeStamp + timeZoneCorrection)*1000);
-        var displayDate = convertedDate.getMonth()+1 + '/' + convertedDate.getDate() + '/' + convertedDate.getFullYear();// + " " + convertedDate.getHours() + ':' + String(convertedDate.getMinutes()).padStart(2,'0');        
-        var displayTime = convertedDate.getHours() + ':' + String(convertedDate.getMinutes()).padStart(2,'0');        
+        var displayDate = convertedDate.getMonth()+1 + '/' + convertedDate.getDate() + '/' + convertedDate.getFullYear();//dd:mm:yyyy
+        var displayTime = convertedDate.getHours() + ':' + String(convertedDate.getMinutes()).padStart(2,'0');           //hh:mm
      
-        if (convertedDate.getHours()>6 && convertedDate.getHours()<18) isDay=true;
+        if (convertedDate.getHours()>6 && convertedDate.getHours()<18) isDay=true; //6h-18h is day period
         else isDay = false;
-        return [displayDate,displayTime];        
+        return [displayDate,displayTime];        //return date and time
 };
-function updateRecent(){    
-    recentSearches = JSON.parse(localStorage.getItem("recentSearches"));
+function updateRecent(){  //updates array of recently searched cities
+    recentSearches = JSON.parse(localStorage.getItem("recentSearches")); //get araay from localestrage
     var length;
-    var inList = false;
+    var inList = false; //is selected city already in array?
 
     if (recentSearches != null){
         length = recentSearches.length;  
         for (var i = 0; i < length; i++){   //check if city is already in list
-            if (city == recentSearches[i]){
+            if (city == recentSearches[i]){ //if city for then remove and replace it at postion 0
                 recentSearches.splice(i,1);
                 recentSearches.unshift(city);
                 inList = true;
@@ -51,9 +51,9 @@ function updateRecent(){
             }
         }
     }
-    if (recentSearches == null) recentSearches = [city];
+    if (recentSearches == null) recentSearches = [city];    //add first item if array is empty
 
-    localStorage.setItem('recentSearches',  JSON.stringify(recentSearches));
+    localStorage.setItem('recentSearches',  JSON.stringify(recentSearches));    //save changes to local storage
 }
 function getIcon(weather){  //loads weather icon from font awesome
     var icons = {clouds: ['<i class="fa">&#xf6c4</i>','<i class="fa">&#xf6c3</i>'], //f0c2
@@ -82,11 +82,10 @@ function getApi(){  //get current and forecast info from api
 
     fetch(queryWeatherURL)  //get current info              
         .then(function (response) {
-        //console.log(response.status); 
         responseStatus = response.status;
-        if (responseStatus != 200){
-            alert("City not found"); 
-            searchEntry.val('');
+        if (responseStatus != 200){     //error handling
+            alert("City not found");    //alert user
+            searchEntry.val('');        //clear field
             return;
         }
         return response.json();
