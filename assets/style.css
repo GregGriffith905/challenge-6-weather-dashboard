@@ -2,6 +2,10 @@
     width: 100%;
     text-align: left;
     padding-left: 45%;
+    margin: 0px;
+    border-radius: 5px;
+    background: linear-gradient(to right, blue, purple);
+    color: white;
 }
 #forecast{
     margin-top: 25px;
@@ -10,4 +14,35 @@
 
 .hide{
     display: none;
+}
+
+.card-body{
+    background-color: lightgrey;
+    border: solid 1px rgb(95, 95, 163);
+    border-radius: 5px;
+}
+
+.btn{
+    background-color : rgb(131, 130, 143) ;
+    color: black;
+}
+
+#search-button{
+    background-color: skyblue;
+    background: linear-gradient(to right, rgb(143, 172, 182), rgb(114, 64, 114));
+    font-weight:550;
+    font-size: 18px;
+    color: black;
+    /* box-shadow: none; */
+
+}
+
+.current-card{
+    background-color: rgba(225, 226, 235, 0.897);
+}
+
+.forecast-card{
+    background-color: rgb(168, 176, 189) ;
+    color: black;;
+    
 }
