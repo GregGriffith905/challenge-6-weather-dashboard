@@ -1,3 +1,9 @@
+header{
+    background: linear-gradient(to right, rgb(210, 210, 247), rgb(238, 225, 238));
+}
+body{
+    background: linear-gradient(to right, rgb(210, 210, 247), rgb(238, 225, 238));
+}
 #dashboard{
     width: 100%;
     text-align: left;
@@ -49,4 +55,9 @@
     font-size: 13px;
     line-height: 13px;
     padding-bottom: 4px;
+}
+.btn-primary:active, .btn-primary:hover, .btn-primary:focus{
+    box-shadow: none !important;
+    background-color: rgb(131, 130, 143) !important;
+    color: black !important;
 }

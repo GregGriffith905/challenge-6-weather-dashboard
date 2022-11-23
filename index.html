@@ -4,12 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> 
     <link rel="stylesheet" href="./assets/style.css"/>
+    <script id="cities-list"></script>
     <title>Weather Dashboard</title>
   </head>
   <body>
@@ -23,8 +28,8 @@
         <div class="row">
           <div class="col-3 align-self-start d-grid gap-2">
                 <h3>Search for a city:</h3>
-                <div class="form-group">
-                    <textarea id="search-entry" class="form-control" rows="1" placeholder="Enter City"></textarea>
+                <div class="form-group ui-widget">
+                    <input id="search-entry" class="form-control" rows="1" placeholder="Enter City" autocomplete="off">
                 </div>
                 <div class="d-grid gap-2">
                     <button id="search-button" class="btn btn-primary" type="button">Search</button>
@@ -56,7 +61,7 @@
             <div id="forecast">
                 <h4>5-day Forecast: </h4>
                 <div class="row">
-                    <div class="col-lg">
+                    <div class="col-sm">
                       <div class="card">
                         <div id="forecast1" class="card-body forecast-card">
                           <h5 class="card-title">Date</h5>
@@ -67,7 +72,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-lg">
+                    <div class="col-sm">
                       <div class="card">
                         <div id="forecast2" class="card-body forecast-card">
                           <h5 class="card-title">Date</h5>
@@ -78,7 +83,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-lg">
+                    <div class="col-sm">
                         <div class="card">
                           <div id="forecast3" class="card-body forecast-card">
                             <h5 class="card-title">Date</h5>
@@ -89,7 +94,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-lg">
+                      <div class="col-sm">
                         <div class="card">
                           <div id="forecast4" class="card-body forecast-card">
                             <h5 class="card-title">Date</h5>
@@ -100,7 +105,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-lg">
+                      <div class="col-sm">
                         <div class="card">
                           <div id="forecast5" class="card-body forecast-card">
                             <h5 class="card-title">Date</h5>
@@ -119,5 +124,6 @@
       </div>    
     
       <script src="./assets/script.js"></script>
+      <script src="./assets/cities.js"></script>
   </body>
 </html>
