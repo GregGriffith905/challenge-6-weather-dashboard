@@ -129,8 +129,8 @@ function getApi(){  //get current and forecast info from api
                         forecastDate.textContent=(fcastdateformatted);                                    //update date 
                         forecastIcon.innerHTML = getIcon(data.list[j].weather[0]);                        //update icon              
                         forecastTemp.textContent=("Temp: " + data.list[j].main.temp.toFixed(2) + "ºC");   //update temp
-                        forecastWind.textContent=("Wind: " + data.list[j].wind.speed.toFixed(2) + "Km/h");//update wind speed
-                        forecastHumidity.textContent=("Humidity: " + data.list[j].main.humidity.toFixed(0) + "%");//update humidity
+                        forecastWind.textContent=("Wind: " + data.list[j].wind.speed.toFixed(2) + "Km/h ");//update wind speed
+                        forecastHumidity.textContent=("Humidity: " + data.list[j].main.humidity.toFixed(0) + "% ");//update humidity
                         if(isDay) forecastCardClass.css("color","white");                                 //update text color- day  
                         else forecastCardClass.css("color","black");                                      //update text color- night 
                     }
