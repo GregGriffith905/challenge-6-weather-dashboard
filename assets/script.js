@@ -63,7 +63,8 @@ function getIcon(weather){  //loads weather icon from font awesome unicode
              snow: '<i class="fa">&#xf2dc</i>',
              rain: '<i class="fa">&#xf740</i>',
              drizzle: '<i class="fa">&#xf73d</i>',
-             thunderstorm: '<i class="fa">&#xf75a</i>'
+             thunderstorm: '<i class="fa">&#xf75a</i>',
+             fog: '<i class="fa">&#xf75f</i>'
             };          
     if (weather.main == "Clear" && isDay) return icons.clear[0];            //return clear sun
     else if (weather.main == "Clear") return icons.clear[1];                //return clear moon   
@@ -74,6 +75,7 @@ function getIcon(weather){  //loads weather icon from font awesome unicode
     else if (weather.main == "Rain") return icons.rain;                     //return heavy rain
     else if (weather.main == "Drizzle") return icons.drizzle;               //return light rain   
     else if (weather.main == "Thunderstorm") return icons.thunderstorm;     //return storm
+    else if (weather.main == "Fog") return icons.fog;                       //return fog
 
 }
 function getApi(){  //get current and forecast info from api
