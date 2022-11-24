@@ -7,10 +7,10 @@ Deployed Link: https://greggriffith905.github.io/challenge-6-weather-dashboard/
 Github Repository: https://github.com/GregGriffith905/challenge-6-weather-dashboard/
 
 ## Screenshots
-https://github.com/GregGriffith905/challenge-6-weather-dashboard/screenshots/scr_shot1_largescreen.jpeg
-https://github.com/GregGriffith905/challenge-6-weather-dashboard/screenshots/scr_shot2_largescreen.jpeg
-https://github.com/GregGriffith905/challenge-6-weather-dashboard/screenshots/scr_shot3_smallcreen.jpeg
-https://github.com/GregGriffith905/challenge-6-weather-dashboard/screenshots/scr_shot4_smallscreen.jpeg
+https://greggriffith905.github.io/challenge-6-weather-dashboard/screenshots/scr_shot1_largescreen.jpeg
+https://greggriffith905.github.io/challenge-6-weather-dashboard/screenshots/scr_shot2_largescreen.jpeg
+https://greggriffith905.github.io/challenge-6-weather-dashboard/screenshots/scr_shot3_smallscreen.jpeg
+https://greggriffith905.github.io/challenge-6-weather-dashboard/screenshots/scr_shot4_smallscreen.jpeg
 
 ## About the app
 This is a weather dashboard application that will allow to user to view the current weather,
