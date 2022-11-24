@@ -78,8 +78,8 @@ function getIcon(weather){  //loads weather icon from font awesome unicode
 }
 function getApi(){  //get current and forecast info from api
     var apiKey = "608e89a8abd53641f8198304f956f5a7";
-    var queryWeatherURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey+"&units=metric";
-    var queryForecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + apiKey+"&units=metric";
+    var queryWeatherURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey+"&units=metric";
+    var queryForecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + apiKey+"&units=metric";
 
     fetch(queryWeatherURL)  //get current info              
         .then(function (response) {

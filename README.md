@@ -1,5 +1,21 @@
 	
 ## Server-Side APIs Challenge: Weather Dashboard
+
+## Goto submission
+
+## Screenshots
+
+## About the app
+This is a weather dashboard application that will allow to user to view the current weather,
+and a 5 day forecast for a selected city. 
+
+The search information should be entered in the form "City name" or "city name, Country code".
+ex. "Toronto" or "Toronto,CA"
+
+The app uses local storage to store the last 8 searched city and will load the most recent search on startup.
+For first time users the app will default to showing Toronto as the city.
+
+## Assignment Info
 Third-party APIs allow developers to access their data and functionality 
 by making requests with specific parameters to a URL. Developers are often 
 tasked with retrieving data from another application's API and using it in 
