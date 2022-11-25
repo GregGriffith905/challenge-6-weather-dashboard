@@ -64,7 +64,8 @@ function getIcon(weather){  //loads weather icon from font awesome unicode
              rain: '<i class="fa">&#xf740</i>',
              drizzle: '<i class="fa">&#xf73d</i>',
              thunderstorm: '<i class="fa">&#xf75a</i>',
-             fog: '<i class="fa">&#xf75f</i>'
+             fog: '<i class="fa">&#xf75f</i>',
+             mist: '<i class="fa">&#xf75f</i>'
             };          
     if (weather.main == "Clear" && isDay) return icons.clear[0];            //return clear sun
     else if (weather.main == "Clear") return icons.clear[1];                //return clear moon   
@@ -76,6 +77,7 @@ function getIcon(weather){  //loads weather icon from font awesome unicode
     else if (weather.main == "Drizzle") return icons.drizzle;               //return light rain   
     else if (weather.main == "Thunderstorm") return icons.thunderstorm;     //return storm
     else if (weather.main == "Fog") return icons.fog;                       //return fog
+    else if (weather.main == "Mist") return icons.mist;                       //return fog
 
 }
 function getApi(){  //get current and forecast info from api
@@ -98,7 +100,8 @@ function getApi(){  //get current and forecast info from api
                 city = data.name;                   //replace typed city name with name from api
                 currentCityInfo.text(city + "  ("+ convertedUnixDate(data.dt,data.timezone)[0] + ") "); //update current city and date
                 lastUpdate.text("Last update: " + convertedUnixDate(data.dt,data.timezone)[1] + "h local time: " + data.name + "," + data.sys.country);
-                currentIcon.html(getIcon(data.weather[0]));                                             //update icon
+                currentIcon.html(getIcon(data.weather[0]));    
+                console.log(data.weather[0]);                                         //update icon
                 currentTemp.text("Temp: " + (data.main.temp).toFixed(2) + "ºC");                        //update temperature
                 currentWind.text("Wind: " + (data.wind.speed/10*36).toFixed(2) + "Km/h");               //update wind speed
                 currentHumidity.text("Humidity: " + (data.main.humidity).toFixed(0) + "%");             //update humidity
