@@ -6,12 +6,6 @@ Deployed Link: https://greggriffith905.github.io/challenge-6-weather-dashboard/
 
 Github Repository: https://github.com/GregGriffith905/challenge-6-weather-dashboard/
 
-## Screenshots
-https://greggriffith905.github.io/challenge-6-weather-dashboard/screenshots/scr_shot1_largescreen.jpeg
-https://greggriffith905.github.io/challenge-6-weather-dashboard/screenshots/scr_shot2_largescreen.jpeg
-https://greggriffith905.github.io/challenge-6-weather-dashboard/screenshots/scr_shot3_smallscreen.jpeg
-https://greggriffith905.github.io/challenge-6-weather-dashboard/screenshots/scr_shot4_smallscreen.jpeg
-
 ## About the app
 This is a weather dashboard application that will allow to user to view the current weather,
 and a 5 day forecast for a selected city. 
@@ -21,6 +15,12 @@ ex. "Toronto" or "Toronto,CA".
 
 The app uses local storage to store the last 8 searched city and will load the most recent search on startup.
 For first time users the app will default to showing Toronto as the city.
+
+## Screenshot
+![screenshot](https://greggriffith905.github.io/challenge-6-weather-dashboard/screenshots/scr_shot1_largescreen.jpeg)
+![screenshot](https://greggriffith905.github.io/challenge-6-weather-dashboard/screenshots/scr_shot2_largescreen.jpeg)
+![screenshot](https://greggriffith905.github.io/challenge-6-weather-dashboard/screenshots/scr_shot3_smallscreen.jpeg)
+![screenshot](https://greggriffith905.github.io/challenge-6-weather-dashboard/screenshots/scr_shot4_smallscreen.jpeg)
 
 ## Assignment Info
 Third-party APIs allow developers to access their data and functionality 
